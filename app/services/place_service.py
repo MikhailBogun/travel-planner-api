@@ -75,7 +75,7 @@ async def update_place(
 
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(place, field, value)
-    place.updated_at = datetime.now(UTC)
+    place.updated_at = datetime.now(UTC).replace(tzinfo=None)
     session.add(place)
     await session.flush()
 
@@ -86,7 +86,7 @@ async def update_place(
         is_completed = all(p.visited for p in all_places.all())
         if project.is_completed != is_completed:
             project.is_completed = is_completed
-            project.updated_at = datetime.now(UTC)
+            project.updated_at = datetime.now(UTC).replace(tzinfo=None)
             session.add(project)
 
     await session.commit()

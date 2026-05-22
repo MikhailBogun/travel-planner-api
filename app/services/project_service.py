@@ -70,7 +70,7 @@ async def update_project(
     project = await get_project_or_404(session, project_id)
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(project, field, value)
-    project.updated_at = datetime.now(UTC)
+    project.updated_at = datetime.now(UTC).replace(tzinfo=None)
     session.add(project)
     await session.commit()
     await session.refresh(project)

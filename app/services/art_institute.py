@@ -9,7 +9,7 @@ _cache: dict[int, tuple[dict, datetime]] = {}
 
 
 async def fetch_artwork(artwork_id: int) -> dict | None:
-    now = datetime.now(UTC)
+    now = datetime.now(UTC).replace(tzinfo=None)
 
     if artwork_id in _cache:
         data, cached_at = _cache[artwork_id]

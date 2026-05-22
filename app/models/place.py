@@ -18,7 +18,7 @@ class Place(SQLModel, table=True):
     title: str = Field(max_length=500)  # cached from API to avoid repeated lookups
     notes: str | None = Field(default=None)
     visited: bool = Field(default=False)
-    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
-    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC).replace(tzinfo=None))
+    updated_at: datetime = Field(default_factory=lambda: datetime.now(UTC).replace(tzinfo=None))
 
     project: "Project" = Relationship(back_populates="places")
