@@ -51,6 +51,18 @@ async def client(session):
 
 
 @pytest.fixture
+async def raw_client(session):
+    """Client that does not bypass auth — for testing authentication behaviour."""
+    async def override_session():
+        yield session
+
+    app.dependency_overrides[get_session] = override_session
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
+        yield c
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture
 def mock_artwork():
     with patch(
         "app.services.project_service.fetch_artwork", new_callable=AsyncMock
