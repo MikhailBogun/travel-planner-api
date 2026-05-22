@@ -4,10 +4,27 @@
     "description": "CRUD API for managing travel projects and places sourced from the Art Institute of Chicago.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      { "key": "username", "value": "{{username}}", "type": "string" },
+      { "key": "password", "value": "{{password}}", "type": "string" }
+    ]
+  },
   "variable": [
     {
       "key": "base_url",
       "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "username",
+      "value": "admin",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "secret",
       "type": "string"
     },
     {
@@ -103,6 +120,47 @@
               "host": ["{{base_url}}"],
               "path": ["projects", "{{project_id}}"]
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Art Institute of Chicago (find artwork IDs)",
+      "item": [
+        {
+          "name": "Search artworks",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "noauth" },
+            "url": {
+              "raw": "https://api.artic.edu/api/v1/artworks/search?q=monet&fields=id,title&limit=10",
+              "protocol": "https",
+              "host": ["api", "artic", "edu"],
+              "path": ["api", "v1", "artworks", "search"],
+              "query": [
+                { "key": "q", "value": "monet", "description": "Search term — change to anything" },
+                { "key": "fields", "value": "id,title" },
+                { "key": "limit", "value": "10" }
+              ]
+            },
+            "description": "Use the 'id' field from results as 'external_id' when creating projects or adding places."
+          }
+        },
+        {
+          "name": "Get artwork by ID",
+          "request": {
+            "method": "GET",
+            "auth": { "type": "noauth" },
+            "url": {
+              "raw": "https://api.artic.edu/api/v1/artworks/16568?fields=id,title",
+              "protocol": "https",
+              "host": ["api", "artic", "edu"],
+              "path": ["api", "v1", "artworks", "16568"],
+              "query": [
+                { "key": "fields", "value": "id,title" }
+              ]
+            },
+            "description": "Verify a specific artwork exists. Replace 16568 with any artwork ID."
           }
         }
       ]
