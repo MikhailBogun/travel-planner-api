@@ -2,7 +2,7 @@ from datetime import date, datetime
 
 from pydantic import BaseModel, Field, model_validator
 
-from app.schemas.place import PlaceRead  # noqa: F401 — re-exported for ProjectReadWithPlaces
+from app.schemas.place import PlaceRead
 
 
 class PlaceCreate(BaseModel):

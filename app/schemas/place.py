@@ -1,6 +1,7 @@
 from datetime import datetime
+from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, model_validator
 
 
 class PlaceAdd(BaseModel):
@@ -10,6 +11,13 @@ class PlaceAdd(BaseModel):
 class PlaceUpdate(BaseModel):
     notes: str | None = None
     visited: bool | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def reject_null_visited(cls, data: Any) -> Any:
+        if isinstance(data, dict) and "visited" in data and data["visited"] is None:
+            raise ValueError("'visited' must be true or false, not null")
+        return data
 
 
 class PlaceRead(BaseModel):
