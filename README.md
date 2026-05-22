@@ -38,9 +38,22 @@ API: http://localhost:8000
 
 ## Environment Variables
 
-| Variable | Description |
-|----------|-------------|
-| `DATABASE_URL` | PostgreSQL async connection string (see `.env.example`) |
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DATABASE_URL` | PostgreSQL async connection string (see `.env.example`) | — |
+| `API_USERNAME` | Basic Auth username | `admin` |
+| `API_PASSWORD` | Basic Auth password | `secret` |
+
+## Authentication
+
+All endpoints require **HTTP Basic Auth**. Set credentials via `API_USERNAME` and `API_PASSWORD` in `.env`.
+
+In Postman: **Authorization tab → Basic Auth → enter username and password.**
+
+In curl:
+```bash
+curl -u admin:secret http://localhost:8000/projects/
+```
 
 ## API Endpoints
 

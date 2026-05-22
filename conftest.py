@@ -12,6 +12,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 os.environ.setdefault("DATABASE_URL", "sqlite+aiosqlite:///:memory:")
 
 import app.models  # noqa: E402, F401 — registers all models with SQLModel.metadata
+from app.auth import verify_credentials  # noqa: E402
 from app.database import get_session  # noqa: E402
 from main import app  # noqa: E402
 
@@ -43,6 +44,7 @@ async def client(session):
         yield session
 
     app.dependency_overrides[get_session] = override_session
+    app.dependency_overrides[verify_credentials] = lambda: None
     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
         yield c
     app.dependency_overrides.clear()
