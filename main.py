@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import projects
+from app.routers import places, projects
 
 app = FastAPI(
     title="Travel Planner API",
@@ -12,3 +12,4 @@ app = FastAPI(
 )
 
 app.include_router(projects.router)
+app.include_router(places.router)

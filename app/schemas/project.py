@@ -2,6 +2,8 @@ from datetime import date, datetime
 
 from pydantic import BaseModel, Field, model_validator
 
+from app.schemas.place import PlaceRead  # noqa: F401 — re-exported for ProjectReadWithPlaces
+
 
 class PlaceCreate(BaseModel):
     external_id: int
@@ -27,18 +29,6 @@ class ProjectUpdate(BaseModel):
     name: str | None = Field(default=None, min_length=1, max_length=255)
     description: str | None = None
     start_date: date | None = None
-
-
-class PlaceRead(BaseModel):
-    id: int
-    external_id: int
-    title: str
-    notes: str | None
-    visited: bool
-    created_at: datetime
-    updated_at: datetime
-
-    model_config = {"from_attributes": True}
 
 
 class ProjectRead(BaseModel):
