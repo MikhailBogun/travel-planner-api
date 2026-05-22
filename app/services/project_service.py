@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import UTC, datetime
 
 from fastapi import HTTPException, status
 from sqlalchemy.orm import selectinload
@@ -70,7 +70,7 @@ async def update_project(
     project = await get_project_or_404(session, project_id)
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(project, field, value)
-    project.updated_at = datetime.utcnow()
+    project.updated_at = datetime.now(UTC)
     session.add(project)
     await session.commit()
     await session.refresh(project)

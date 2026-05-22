@@ -44,6 +44,13 @@ uvicorn main:app --reload
 |----------|-------------|
 | `DATABASE_URL` | PostgreSQL async connection string (see `.env.example`) |
 
+## Running Tests
+
+```bash
+pip install -r requirements-dev.txt
+pytest
+```
+
 ## API Documentation
 
 Interactive Swagger UI is available at `/docs` when the app is running.
