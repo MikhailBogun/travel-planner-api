@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 
+from app.routers import projects
+
 app = FastAPI(
     title="Travel Planner API",
     description=(
@@ -8,3 +10,5 @@ app = FastAPI(
     ),
     version="1.0.0",
 )
+
+app.include_router(projects.router)
